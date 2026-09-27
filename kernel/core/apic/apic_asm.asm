@@ -7,19 +7,19 @@ global apic_rdmsr
 global apic_wrmsr
 
 
-; =============================================================================
-; CPUID
-;
-; uint32_t apic_cpuid(uint32_t leaf)
-;
+; void apic_cpuid(uint32_t leaf, struct cpuid_result *result)
 ; RDI = leaf
-;
-; Zwracamy EAX.
-; =============================================================================
+; RSI = result
 
 apic_cpuid:
     mov eax, edi
+    xor ecx, ecx
     cpuid
+
+    mov [rsi + 0], eax
+    mov [rsi + 4], ebx
+    mov [rsi + 8], ecx
+    mov [rsi + 12], edx
     ret
 
 

@@ -124,6 +124,16 @@ void exception_handler(struct interrupt_frame *frame)
     serial_write("ss: ");
     serial_write_hex(frame->ss);
     serial_write("\r\n");
+
+    uint64_t cr2;
+    __asm__ volatile (
+        "mov %%cr2, %0"
+        : "=r"(cr2)
+    );
+    serial_write("CR2: ");
+    serial_write_hex(cr2);
+    serial_write("\r\n");
+
     panic("idt fault",0);
     
 }

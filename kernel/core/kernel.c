@@ -2,6 +2,8 @@
 #include "gdt.h"
 #include "idt.h"
 #include "apic.h"
+#include "acpi.h"
+#include "map_memory.h"
 
 char initsystem(void){
     serial_init();
@@ -20,6 +22,13 @@ char initsystem(void){
     apic_init();
     serial_write("zaladowano apic\n");
 
+    serial_write("laduje acpi\n");
+    acpi_init();
+    serial_write("zaladowano acpi\n");
+
+    serial_write("mapuje pamiec\n");
+    map_memory_init();
+    serial_write("zmapowano pamiec\n");
 
     return 0;
 }
